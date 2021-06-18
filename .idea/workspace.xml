@@ -3,12 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9ca3c229-2206-44f9-b5c7-3d52664f4750" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objetos.py" beforeDir="false" afterPath="$PROJECT_DIR$/objetos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/programa.py" beforeDir="false" afterPath="$PROJECT_DIR$/programa.py" afterDir="false" />
     </list>
-    <list id="f95777c1-10f8-4a9f-8bad-f6c22ecb0d34" name="Changes by rayna" comment="">
-      <change beforePath="$PROJECT_DIR$/objetos.py" beforeDir="false" afterPath="$PROJECT_DIR$/objetos.py" afterDir="false" />
-    </list>
-    <list id="e8936278-f99b-4202-abf2-7d26ed7dd1c8" name="Changes by Raynan" comment="" />
+    <list id="f95777c1-10f8-4a9f-8bad-f6c22ecb0d34" name="Changes by rayna" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,19 +22,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/objetos.py">
-      <ranges>
-        <range start1="8" end1="9" start2="8" end2="9" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
-        <range start1="10" end1="10" start2="10" end2="11" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
-        <range start1="19" end1="20" start2="20" end2="20" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
-        <range start1="21" end1="22" start2="21" end2="22" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
-        <range start1="23" end1="23" start2="23" end2="24" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
-        <range start1="94" end1="94" start2="95" end2="96" changelist="f95777c1-10f8-4a9f-8bad-f6c22ecb0d34" />
-        <range start1="96" end1="96" start2="98" end2="99" changelist="f95777c1-10f8-4a9f-8bad-f6c22ecb0d34" />
-      </ranges>
-    </file>
-  </component>
   <component name="ProjectId" id="1u6RitRdSYE0CGywFKeBn6FAAJ2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -49,7 +33,7 @@
     <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.programa">
     <configuration name="objetos" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="cg_playground" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -71,8 +55,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="programa" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="cg_playground" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/programa.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.programa" />
         <item itemvalue="Python.objetos" />
       </list>
     </recent_temporary>
@@ -87,5 +93,16 @@
       <updated>1623984185322</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/programa.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
