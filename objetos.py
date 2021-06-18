@@ -6,8 +6,9 @@ from typing import List, Tuple, Any
 
 @dataclass
 class Poli:
-    vertices: Any = None#List[List[float]] = List
+    vertices: Any = None  # List[List[float]] = List
     arestas: Any = None
+    origem: Tuple[float] = None  # (0.0, 0.0, 0.0)
 
     def __post_init__(self):
         """Do something after instancing"""
@@ -17,10 +18,10 @@ class Poli:
         # to-do
         pass
 
-
     def vertices_para_arestas(self):
-        """ Should be implemented on children """
+        """Should be implemented on children"""
         pass
+
 
 class Cubo(Poli):
     @staticmethod
@@ -92,8 +93,10 @@ class Piramide(Poli):
 if __name__ == "__main__":
     print("asd")
     cubo = Cubo.from_arestas(x=1.5, y=1.5, z=1.5)
+    # cubo = cubo.origem( (0.5 ** (x*x + y*y)) * 0.5)
 
     paralelepipedo = Cubo.from_arestas(1.5, 5, 2.5)
+    # paralelepipedo = paralelepipedo.origem((paralelepipedo.vertices[0][0]+paralelepipedo.vertices[3][0])/2,(paralelepipedo.vertices[0][1]+paralelepipedo.vertices[3][1])/2,(paralelepipedo.vertices[0][2]+paralelepipedo.vertices[3][2])/2)
 
     piramide = Piramide.from_arestas(2, 2, 3)
 

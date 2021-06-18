@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ca3c229-2206-44f9-b5c7-3d52664f4750" name="Default Changelist" comment="" />
+    <list default="true" id="9ca3c229-2206-44f9-b5c7-3d52664f4750" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/objetos.py" beforeDir="false" afterPath="$PROJECT_DIR$/objetos.py" afterDir="false" />
+    </list>
+    <list id="f95777c1-10f8-4a9f-8bad-f6c22ecb0d34" name="Changes by rayna" comment="">
+      <change beforePath="$PROJECT_DIR$/objetos.py" beforeDir="false" afterPath="$PROJECT_DIR$/objetos.py" afterDir="false" />
+    </list>
+    <list id="e8936278-f99b-4202-abf2-7d26ed7dd1c8" name="Changes by Raynan" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +24,19 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/objetos.py">
+      <ranges>
+        <range start1="8" end1="9" start2="8" end2="9" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
+        <range start1="10" end1="10" start2="10" end2="11" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
+        <range start1="19" end1="20" start2="20" end2="20" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
+        <range start1="21" end1="22" start2="21" end2="22" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
+        <range start1="23" end1="23" start2="23" end2="24" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
+        <range start1="94" end1="94" start2="95" end2="96" changelist="f95777c1-10f8-4a9f-8bad-f6c22ecb0d34" />
+        <range start1="96" end1="96" start2="98" end2="99" changelist="f95777c1-10f8-4a9f-8bad-f6c22ecb0d34" />
+      </ranges>
+    </file>
   </component>
   <component name="ProjectId" id="1u6RitRdSYE0CGywFKeBn6FAAJ2" />
   <component name="ProjectViewState">
