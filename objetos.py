@@ -8,7 +8,9 @@ from typing import List, Tuple, Any
 class Poli:
     vertices: Any = None  # List[List[float]] = List
     arestas: Any = None
-    origem: Tuple[float] = None  # (0.0, 0.0, 0.0)
+    origem: List[float] = None  # (0.0, 0.0, 0.0)
+    _origem: Tuple[float] = None  # (0.0, 0.0, 0.0)
+    x_y_z : Tuple[float] = None
 
     def __post_init__(self):
         """Do something after instancing"""
@@ -25,10 +27,31 @@ class Poli:
         """Should be implemented on children"""
         pass
 
+    # def __setattr__(self, key, value):
+    #     if key == "_origem": # expeting a tuple
+    #         if not isinstance(value, Tuple):
+    #             raise ValueError
+    #
+    #         self.origem = list(value)
+    #         self._origem = value
+    #     else:
+    #         return super().__setattr__(key, value)
+
+    def translacao(self, destino: Tuple):
+        origem = [destino[index] - self.origem[index] for index, value in enumerate(destino)]
+        for linha in self.vertices:
+            for i in range(0,3):
+                linha[i] += origem[i]
+
+        self.origem = destino
+
+        print(self.vertices)
+
+
 class Cubo(Poli):
     @staticmethod
     def from_arestas(x: float = 1, y: float = 1, z: float = 1):
-        return Cubo(
+        cubo = Cubo(
             vertices=np.array(
                 [
                     [0, 0, 0],  # A
@@ -42,6 +65,10 @@ class Cubo(Poli):
                 ]
             )
         )
+
+        cubo.x_y_z = (x, y, z)
+
+        return cubo
 
     def vertices_para_arestas(self):
         self.arestas = [
@@ -58,15 +85,47 @@ class Cubo(Poli):
             [self.vertices[2], self.vertices[6]],  # C - G
             [self.vertices[3], self.vertices[7]],  # D - H
         ]
+
     def vertices_para_faces(self):
         self.faces = [
-            [self.vertices[0],self.vertices[1],self.vertices[2],self.vertices[3]], #A-B-C-D
-            [self.vertices[4],self.vertices[5],self.vertices[6],self.vertices[7]], #E-F-G-H
-            [self.vertices[2],self.vertices[3],self.vertices[7],self.vertices[6]], #C-D-H-G
-            [self.vertices[1],self.vertices[2],self.vertices[6],self.vertices[5]], #B-C-G-F
-            [self.vertices[0],self.vertices[1],self.vertices[5],self.vertices[4]], #A-B-F-E
-            [self.vertices[0],self.vertices[3],self.vertices[4],self.vertices[7]]  #A-D-H-E
+            [
+                self.vertices[0],
+                self.vertices[1],
+                self.vertices[2],
+                self.vertices[3],
+            ],  # A-B-C-D
+            [
+                self.vertices[4],
+                self.vertices[5],
+                self.vertices[6],
+                self.vertices[7],
+            ],  # E-F-G-H
+            [
+                self.vertices[2],
+                self.vertices[3],
+                self.vertices[7],
+                self.vertices[6],
+            ],  # C-D-H-G
+            [
+                self.vertices[1],
+                self.vertices[2],
+                self.vertices[6],
+                self.vertices[5],
+            ],  # B-C-G-F
+            [
+                self.vertices[0],
+                self.vertices[1],
+                self.vertices[5],
+                self.vertices[4],
+            ],  # A-B-F-E
+            [
+                self.vertices[0],
+                self.vertices[3],
+                self.vertices[4],
+                self.vertices[7],
+            ],  # A-D-H-E
         ]
+
 
 class Piramide(Poli):
     @staticmethod
@@ -101,11 +160,16 @@ class Piramide(Poli):
 
     def vertices_para_faces(self):
         self.faces = [
-            [self.vertices[0],self.vertices[1],self.vertices[2],self.vertices[3]], #A-B-C-D(BASE)
-            [self.vertices[0],self.vertices[1],self.vertices[4]], #A-B-E
-            [self.vertices[1],self.vertices[2],self.vertices[4]], #B-C-E
-            [self.vertices[2],self.vertices[3],self.vertices[4]], #C-D-E
-            [self.vertices[3],self.vertices[0],self.vertices[4]], #D-A-E
+            [
+                self.vertices[0],
+                self.vertices[1],
+                self.vertices[2],
+                self.vertices[3],
+            ],  # A-B-C-D(BASE)
+            [self.vertices[0], self.vertices[1], self.vertices[4]],  # A-B-E
+            [self.vertices[1], self.vertices[2], self.vertices[4]],  # B-C-E
+            [self.vertices[2], self.vertices[3], self.vertices[4]],  # C-D-E
+            [self.vertices[3], self.vertices[0], self.vertices[4]],  # D-A-E
         ]
 
 
