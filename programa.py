@@ -31,6 +31,10 @@ def plot():
     ax.set_ylabel("Eixo Y")
     ax.set_zlabel("Eixo Z")
 
+    ax.plot([1.2, -1.2], [0, 0], [0, 0], color='Black', alpha=0.4)
+    ax.plot([0, 0], [1.2, -1.2], [0, 0], color='Black', alpha=0.4)
+    ax.plot([0, 0], [0, 0], [1.2, -1.2], color='Black', alpha=0.4)
+
     plt.show()
 
 
