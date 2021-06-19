@@ -8,6 +8,7 @@ from typing import List, Tuple, Any
 class Poli:
     vertices: Any = None  # List[List[float]] = List
     arestas: Any = None
+    faces: Any = None
     origem: List[float] = None  # (0.0, 0.0, 0.0)
     _origem: Tuple[float] = None  # (0.0, 0.0, 0.0)
     x_y_z : Tuple[float] = None
@@ -15,7 +16,7 @@ class Poli:
     def __post_init__(self):
         """Do something after instancing"""
         self.vertices_para_arestas()
-
+        self.vertices_para_faces()
     def drawn(self):
         # to-do
         pass
@@ -45,7 +46,6 @@ class Poli:
 
         self.origem = destino
 
-        print(self.vertices)
 
 
 class Cubo(Poli):
@@ -121,8 +121,8 @@ class Cubo(Poli):
             [
                 self.vertices[0],
                 self.vertices[3],
-                self.vertices[4],
                 self.vertices[7],
+                self.vertices[4],
             ],  # A-D-H-E
         ]
 

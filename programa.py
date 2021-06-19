@@ -7,22 +7,6 @@ from pprint import pprint
 
 
 def draw_poli(ax, color, poli: Poli):
-    # ax.scatter3D(poli.arestas[:, 0], poli.arestas[:, 1], poli.arestas[:, 2])
-
-    #   verts = [
-    #         [Z[0],Z[1],Z[2],Z[3]],
-    #         [Z[4],Z[5],Z[6],Z[7]],
-    #         [Z[0],Z[1],Z[5],Z[4]],
-    #         [Z[2],Z[3],Z[7],Z[6]],
-    #         [Z[1],Z[2],Z[6],Z[5]],
-    #         [Z[4],Z[7],Z[3],Z[0]]
-    #       ]
-
-    # for i in range(poli.arestas,2):
-    #
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection="3d")
-
     for linha in poli.arestas:
         print(linha)
         ax.plot(
@@ -31,10 +15,7 @@ def draw_poli(ax, color, poli: Poli):
             zs=[linha[0][2], linha[1][2]],
         )
 
-
-    # verts = poli.vertices
-    #
-    # ax.add_collection3d(Poly3DCollection(verts, facecolors='b', linewidths=1.5, edgecolors='g'))
+    ax.add_collection3d(Poly3DCollection(poli.faces, facecolors=color[0], linewidths=1.5, edgecolors=color[0], alpha=color[1]))
 
 
 def main():
@@ -45,12 +26,11 @@ def main():
     cubo.origem = (0,0,0)
     cubo.translacao(destino=(2,2,2))
 
-    draw_poli(ax=ax, poli=cubo, color=("black", 0.1))
+    draw_poli(ax=ax, poli=cubo, color=("purple", 0.1))
 
     cubo.translacao(destino=(0,0,0))
 
-    draw_poli(ax=ax, poli=cubo, color=("black", 0.1))
-
+    draw_poli(ax=ax, poli=cubo, color=("cyan", 0.1))
 
 
     ax.set_title("Cenário 1")
@@ -61,12 +41,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # teste()
-    # cubo = Cubo.from_arestas(x=1.5, y=1.5, z=1.5)
-    #
-    # main()
-    #
-    # piramide = Piramide.from_arestas(2, 2, 3)
-    # teste2(piramide)
-
     main()
