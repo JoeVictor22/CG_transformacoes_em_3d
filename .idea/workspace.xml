@@ -3,9 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="9ca3c229-2206-44f9-b5c7-3d52664f4750" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/programa.py" beforeDir="false" afterPath="$PROJECT_DIR$/programa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/objetos.py" beforeDir="false" afterPath="$PROJECT_DIR$/objetos.py" afterDir="false" />
     </list>
     <list id="f95777c1-10f8-4a9f-8bad-f6c22ecb0d34" name="Changes by rayna" comment="" />
+    <list id="b3c867b8-00f7-4650-858c-5faa30bcf8c1" name="Changes by Raynan" comment="">
+      <change beforePath="$PROJECT_DIR$/objetos.py" beforeDir="false" afterPath="$PROJECT_DIR$/objetos.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,6 +25,16 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/objetos.py">
+      <ranges>
+        <range start1="22" end1="22" start2="22" end2="25" changelist="b3c867b8-00f7-4650-858c-5faa30bcf8c1" />
+        <range start1="23" end1="24" start2="26" end2="26" changelist="b3c867b8-00f7-4650-858c-5faa30bcf8c1" />
+        <range start1="58" end1="59" start2="60" end2="69" changelist="b3c867b8-00f7-4650-858c-5faa30bcf8c1" />
+        <range start1="90" end1="90" start2="100" end2="109" changelist="9ca3c229-2206-44f9-b5c7-3d52664f4750" />
+      </ranges>
+    </file>
   </component>
   <component name="ProjectId" id="1u6RitRdSYE0CGywFKeBn6FAAJ2" />
   <component name="ProjectViewState">

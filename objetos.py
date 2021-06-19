@@ -20,8 +20,10 @@ class Poli:
 
     def vertices_para_arestas(self):
         """Should be implemented on children"""
-        pass
 
+    def vertices_para_faces(self):
+        """Should be implemented on children"""
+        pass
 
 class Cubo(Poli):
     @staticmethod
@@ -56,7 +58,15 @@ class Cubo(Poli):
             [self.vertices[2], self.vertices[6]],  # C - G
             [self.vertices[3], self.vertices[7]],  # D - H
         ]
-
+    def vertices_para_faces(self):
+        self.faces = [
+            [self.vertices[0],self.vertices[1],self.vertices[2],self.vertices[3]], #A-B-C-D
+            [self.vertices[4],self.vertices[5],self.vertices[6],self.vertices[7]], #E-F-G-H
+            [self.vertices[2],self.vertices[3],self.vertices[7],self.vertices[6]], #C-D-H-G
+            [self.vertices[1],self.vertices[2],self.vertices[6],self.vertices[5]], #B-C-G-F
+            [self.vertices[0],self.vertices[1],self.vertices[5],self.vertices[4]], #A-B-F-E
+            [self.vertices[0],self.vertices[3],self.vertices[4],self.vertices[7]]  #A-D-H-E
+        ]
 
 class Piramide(Poli):
     @staticmethod
@@ -87,6 +97,15 @@ class Piramide(Poli):
             [self.vertices[1], self.vertices[4]],  # B - E
             [self.vertices[2], self.vertices[4]],  # C - E
             [self.vertices[3], self.vertices[4]],  # D - E
+        ]
+
+    def vertices_para_faces(self):
+        self.faces = [
+            [self.vertices[0],self.vertices[1],self.vertices[2],self.vertices[3]], #A-B-C-D(BASE)
+            [self.vertices[0],self.vertices[1],self.vertices[4]], #A-B-E
+            [self.vertices[1],self.vertices[2],self.vertices[4]], #B-C-E
+            [self.vertices[2],self.vertices[3],self.vertices[4]], #C-D-E
+            [self.vertices[3],self.vertices[0],self.vertices[4]], #D-A-E
         ]
 
 
