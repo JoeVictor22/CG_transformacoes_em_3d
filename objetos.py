@@ -9,8 +9,8 @@ class Poli:
     vertices: Any = None  # List[List[float]] = List
     arestas: Any = None
     faces: Any = None
-    origem: List[float] = None  # (0.0, 0.0, 0.0)
-    _origem: Tuple[float] = None  # (0.0, 0.0, 0.0)
+    origem: List[float] = (0,0,0)  # (0.0, 0.0, 0.0)
+    _origem: Tuple[float] = (0,0,0)  # (0.0, 0.0, 0.0)
     x_y_z : Tuple[float] = None
 
     def __post_init__(self):
@@ -137,7 +137,7 @@ class Piramide(Poli):
                     [x, 0, 0],  # B
                     [x, y, 0],  # C
                     [0, y, 0],  # D
-                    [0, 0, z],  # E
+                    [x/2, y/2, z],  # E
                 ]
             )
         )
