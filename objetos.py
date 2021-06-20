@@ -11,7 +11,6 @@ class Poli:
     faces: Any = None
     origem: List[float] = (0,0,0)  # (0.0, 0.0, 0.0)
     _origem: Tuple[float] = (0,0,0)  # (0.0, 0.0, 0.0)
-    x_y_z : Tuple[float] = None
 
     def __post_init__(self):
         """Do something after instancing"""
@@ -47,6 +46,82 @@ class Poli:
         self.origem = destino
 
 
+class PiramideTronco(Poli):
+    @staticmethod
+    def from_arestas(x_base: float = 1, y_base: float = 1, z: float = 1, x_superior: float = 1, y_superior: float = 1):
+        cubo = Cubo(
+            vertices=np.array(
+                [
+                    [0, 0, 0],            # A
+                    [x_base, 0, 0],       # B
+                    [x_base, y_base, 0],  # C
+                    [0, y_base, 0],       # D
+                    [(x_base-x_superior)/2, (y_base-y_superior)/2, z],            # E
+                    [(x_base-x_superior)/2 + x_superior,  (y_base-y_superior)/2, z],     # F
+                    [(x_base-x_superior)/2 + x_superior, (y_base-y_superior)/2 + y_superior, z],  # G
+                    [(x_base-x_superior)/2, (y_base-y_superior)/2 + y_superior, z],   # H
+                ]
+            )
+        )
+
+        return cubo
+
+    def vertices_para_arestas(self):
+        self.arestas = [
+            [self.vertices[0], self.vertices[1]],  # A - B
+            [self.vertices[1], self.vertices[2]],  # B - C
+            [self.vertices[2], self.vertices[3]],  # C - D
+            [self.vertices[3], self.vertices[0]],  # D - A
+            [self.vertices[4], self.vertices[5]],  # E - F
+            [self.vertices[5], self.vertices[6]],  # F - G
+            [self.vertices[6], self.vertices[7]],  # G - H
+            [self.vertices[7], self.vertices[4]],  # H - E
+            [self.vertices[0], self.vertices[4]],  # A - E
+            [self.vertices[1], self.vertices[5]],  # B - F
+            [self.vertices[2], self.vertices[6]],  # C - G
+            [self.vertices[3], self.vertices[7]],  # D - H
+        ]
+
+    def vertices_para_faces(self):
+        self.faces = [
+            [
+                self.vertices[0],
+                self.vertices[1],
+                self.vertices[2],
+                self.vertices[3],
+            ],  # A-B-C-D
+            [
+                self.vertices[4],
+                self.vertices[5],
+                self.vertices[6],
+                self.vertices[7],
+            ],  # E-F-G-H
+            [
+                self.vertices[2],
+                self.vertices[3],
+                self.vertices[7],
+                self.vertices[6],
+            ],  # C-D-H-G
+            [
+                self.vertices[1],
+                self.vertices[2],
+                self.vertices[6],
+                self.vertices[5],
+            ],  # B-C-G-F
+            [
+                self.vertices[0],
+                self.vertices[1],
+                self.vertices[5],
+                self.vertices[4],
+            ],  # A-B-F-E
+            [
+                self.vertices[0],
+                self.vertices[3],
+                self.vertices[7],
+                self.vertices[4],
+            ],  # A-D-H-E
+        ]
+
 
 class Cubo(Poli):
     @staticmethod
@@ -66,7 +141,6 @@ class Cubo(Poli):
             )
         )
 
-        cubo.x_y_z = (x, y, z)
 
         return cubo
 

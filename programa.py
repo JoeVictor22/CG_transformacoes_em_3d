@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-from objetos import Poli, Cubo, Piramide
+from objetos import Poli, Cubo, Piramide, PiramideTronco
 from pprint import pprint
 
 
@@ -35,6 +35,8 @@ def plot():
     ax.plot([0, 0], [1.2, -1.2], [0, 0], color='Black', alpha=0.4)
     ax.plot([0, 0], [0, 0], [1.2, -1.2], color='Black', alpha=0.4)
 
+    # plt.axis('off')
+    # plt.grid(b=None)
     plt.show()
 
 
@@ -46,12 +48,20 @@ def main():
     draw_poli(ax=ax, poli=cubo, color=("purple", 0.1))
 
     cubo.translacao(destino=(0,0,0))
+    cubo.translacao(destino=(4,4,4))
+
     draw_poli(ax=ax, poli=cubo, color=("blue", 0.1))
 
     piramide = Piramide.from_arestas(1, 1, 1)
     piramide.origem = (0,0,0)
     piramide.translacao((4,4,4))
     draw_poli(ax=ax, poli=piramide, color=("gray", 0.1))
+
+    tronco = PiramideTronco.from_arestas(x_base=2, y_base=2, z=1.5, x_superior=1, y_superior=1)
+    tronco.translacao((-1,-1,-1))
+    draw_poli(ax=ax, poli=tronco, color=("purple", 0.1))
+
+
 
     plot()
 
