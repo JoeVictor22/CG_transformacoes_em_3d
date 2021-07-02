@@ -2,7 +2,8 @@ from dataclasses import dataclass
 import numpy as np
 from pprint import pprint
 from typing import List, Tuple, Any
-from math import sin, cos
+from math import sin, cos, radians
+from copy import copy
 
 
 @dataclass
@@ -15,10 +16,9 @@ class Poli:
 
     def __post_init__(self):
         """Do something after instancing"""
-        self.vertices_para_arestas()
-        self.vertices_para_faces()
+        pass
 
-    def reload(self):
+    def calcular_estruturas(self):
         self.vertices_para_arestas()
         self.vertices_para_faces()
 
@@ -47,13 +47,28 @@ class Poli:
         origem = [
             destino[index] - self.origem[index] for index, value in enumerate(destino)
         ]
-        for linha in self.vertices:
-            for i in range(0, 3):
-                linha[i] += origem[i]
+        matriz_de_translacao = np.array(
+            [
+                [1,0,0, 0],
+                [0,1,0, 0],
+                [0,0,1, 0],
+                [origem[0],origem[1],origem[2], 1]
+            ]
+        )
+
+
+        m_entrada = copy(self.vertices)
+        m_entrada = np.hstack((m_entrada, np.ones((len(m_entrada), 1))))
+
+        m_entrada = np.dot(m_entrada, matriz_de_translacao)
+
+        self.vertices = np.delete(m_entrada, 3, axis=1)
 
         self.origem = destino
 
+
     def rotacao(self, angulo, eixo="x"):
+        angulo = radians(angulo)
         if eixo == "x":
             rot_x = np.array(
                 [
@@ -83,8 +98,6 @@ class Poli:
                 ]
             )
             self.vertices = np.dot(self.vertices, rot_z)
-
-        self.reload()
 
 
 class PiramideTronco(Poli):

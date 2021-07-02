@@ -4,9 +4,13 @@ from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from objetos import Poli, Cubo, Piramide, PiramideTronco
 from pprint import pprint
+from copy import copy
 
 
 def draw_poli(ax, color, poli: Poli):
+
+    poli.calcular_estruturas() # calcular arestas/faces
+
     for linha in poli.arestas:
         print(linha)
         ax.plot(
@@ -25,6 +29,10 @@ def draw_poli(ax, color, poli: Poli):
         )
     )
 
+    ax.scatter(0,0,1, c="red")
+    ax.scatter(0, 1, 0, c="green")
+    ax.scatter(1, 0, 0, c="blue")
+
 
 fig = plt.figure(figsize=(10, 10))
 ax = fig.add_subplot(111, projection="3d")
@@ -37,8 +45,8 @@ def plot():
     ax.set_ylim3d(-1, 1)
 
     ax.set_title("Cenário 1")
-    ax.set_xlabel("Eixo X")
-    ax.set_ylabel("Eixo Y")
+    ax.set_xlabel("Eixo Y")
+    ax.set_ylabel("Eixo X")
     ax.set_zlabel("Eixo Z")
 
     ax.plot([1.2, -1.2], [0, 0], [0, 0], color="Black", alpha=0.4)
@@ -53,13 +61,13 @@ def plot():
 def main():
 
     # cubo : 1,5
-    cubo = Cubo.from_arestas(x=1.5, y=1.5, z=1.5)
+    cubo = Cubo.from_arestas(x=1, y=1, z=1)
     cubo.origem = (0, 0, 0)
-    # cubo.translacao(destino=(2,2,2))
-    cubo.rotacao(angulo=50, eixo="x")
-    cubo.rotacao(angulo=50, eixo="z")
-    cubo.rotacao(angulo=50, eixo="y")
-    draw_poli(ax=ax, poli=cubo, color=("purple", 0.1))
+    cubo.translacao(destino=(2,2,2))
+    # cubo.rotacao(angulo=45, eixo="x")
+    draw_poli(ax=ax, poli=cubo, color=("gray", 0.1))
+
+
 
     #   # paralelepipedo : 1.5, 5, 2.5
     #   paralelepipedo = Cubo.from_arestas(x=1.5, y=5, z=2.5)
