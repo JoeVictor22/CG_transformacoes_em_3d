@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import numpy as np
 from pprint import pprint
 from typing import List, Tuple, Any
+from math import sin, cos
 
 
 @dataclass
@@ -9,14 +10,19 @@ class Poli:
     vertices: Any = None  # List[List[float]] = List
     arestas: Any = None
     faces: Any = None
-    origem: List[float] = (0,0,0)  # (0.0, 0.0, 0.0)
-    _origem: Tuple[float] = (0,0,0)  # (0.0, 0.0, 0.0)
+    origem: List[float] = (0, 0, 0)  # (0.0, 0.0, 0.0)
+    _origem: Tuple[float] = (0, 0, 0)  # (0.0, 0.0, 0.0)
 
     def __post_init__(self):
         """Do something after instancing"""
         self.vertices_para_arestas()
         self.vertices_para_faces()
-    def drawn(self):
+
+    def reload(self):
+        self.vertices_para_arestas()
+        self.vertices_para_faces()
+
+    def draw(self):
         # to-do
         pass
 
@@ -38,28 +44,81 @@ class Poli:
     #         return super().__setattr__(key, value)
 
     def translacao(self, destino: Tuple):
-        origem = [destino[index] - self.origem[index] for index, value in enumerate(destino)]
+        origem = [
+            destino[index] - self.origem[index] for index, value in enumerate(destino)
+        ]
         for linha in self.vertices:
-            for i in range(0,3):
+            for i in range(0, 3):
                 linha[i] += origem[i]
 
         self.origem = destino
 
+    def rotacao(self, angulo, eixo="x"):
+        if eixo == "x":
+            rot_x = np.array(
+                [
+                    [1, 0, 0],
+                    [0, cos(angulo), -sin(angulo)],
+                    [0, sin(angulo), cos(angulo)]
+                ]
+            )
+            self.vertices = np.dot(self.vertices, rot_x)
+
+        if eixo == "y":
+            rot_y = np.array(
+                [
+                    [cos(angulo), 0, sin(angulo)],
+                    [0, 1, 0],
+                    [-sin(angulo), 0, cos(angulo)]
+                ]
+            )
+            self.vertices = np.dot(self.vertices, rot_y)
+
+        if eixo == "z":
+            rot_z = np.array(
+                [
+                    [cos(angulo), -sin(angulo), 0],
+                    [sin(angulo), cos(angulo), 0],
+                    [0, 0, 1]
+                ]
+            )
+            self.vertices = np.dot(self.vertices, rot_z)
+
+        self.reload()
+
 
 class PiramideTronco(Poli):
     @staticmethod
-    def from_arestas(x_base: float = 1, y_base: float = 1, z: float = 1, x_superior: float = 1, y_superior: float = 1):
+    def from_arestas(
+        x_base: float = 1,
+        y_base: float = 1,
+        z: float = 1,
+        x_superior: float = 1,
+        y_superior: float = 1,
+    ):
         cubo = Cubo(
             vertices=np.array(
                 [
-                    [0, 0, 0],            # A
-                    [x_base, 0, 0],       # B
+                    [0, 0, 0],  # A
+                    [x_base, 0, 0],  # B
                     [x_base, y_base, 0],  # C
-                    [0, y_base, 0],       # D
-                    [(x_base-x_superior)/2, (y_base-y_superior)/2, z],            # E
-                    [(x_base-x_superior)/2 + x_superior,  (y_base-y_superior)/2, z],     # F
-                    [(x_base-x_superior)/2 + x_superior, (y_base-y_superior)/2 + y_superior, z],  # G
-                    [(x_base-x_superior)/2, (y_base-y_superior)/2 + y_superior, z],   # H
+                    [0, y_base, 0],  # D
+                    [(x_base - x_superior) / 2, (y_base - y_superior) / 2, z],  # E
+                    [
+                        (x_base - x_superior) / 2 + x_superior,
+                        (y_base - y_superior) / 2,
+                        z,
+                    ],  # F
+                    [
+                        (x_base - x_superior) / 2 + x_superior,
+                        (y_base - y_superior) / 2 + y_superior,
+                        z,
+                    ],  # G
+                    [
+                        (x_base - x_superior) / 2,
+                        (y_base - y_superior) / 2 + y_superior,
+                        z,
+                    ],  # H
                 ]
             )
         )
@@ -141,7 +200,6 @@ class Cubo(Poli):
             )
         )
 
-
         return cubo
 
     def vertices_para_arestas(self):
@@ -211,7 +269,7 @@ class Piramide(Poli):
                     [x, 0, 0],  # B
                     [x, y, 0],  # C
                     [0, y, 0],  # D
-                    [x/2, y/2, z],  # E
+                    [x / 2, y / 2, z],  # E
                 ]
             )
         )
