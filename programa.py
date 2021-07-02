@@ -33,6 +33,8 @@ def draw_poli(ax, color, poli: Poli):
     ax.scatter(0, 1, 0, c="green")
     ax.scatter(1, 0, 0, c="blue")
 
+    ax.scatter(*poli.origem, c=color[0])
+
 
 fig = plt.figure(figsize=(10, 10))
 ax = fig.add_subplot(111, projection="3d")
@@ -89,5 +91,35 @@ def main():
     plot()
 
 
+def primeira_questao():
+    # cubo : 1,5
+    cubo = Cubo.from_arestas(x=1.5, y=1.5, z=1.5)
+    cubo.origem = (1.5/2, 1.5/2, 0)
+    cubo.translacao((0,0,0))
+    draw_poli(ax=ax, poli=cubo, color=("gray", 0.1))
+
+    # paralelepipedo : 1.5, 5, 2.5
+    paralelepipedo = Cubo.from_arestas(x=1.5, y=5, z=2.5)
+    paralelepipedo.origem = (0,5/2,0)
+    paralelepipedo.translacao((0,0,0))
+    draw_poli(ax=ax, poli=paralelepipedo, color=("red", 0.1))
+
+    # piramide : b=2 a=3
+    piramide = Piramide.from_arestas(2, 2, 3)
+    piramide.origem = (1,1, 0)
+    piramide.translacao((0,0,0))
+    piramide.rotacao(45, "z")
+    draw_poli(ax=ax, poli=piramide, color=("gray", 0.1))
+
+    # tronco : b=3 1.3 a=2.5
+    tronco = PiramideTronco.from_arestas(x_base=3, y_base=3, z=2.5, x_superior=1.3, y_superior=1.3)
+    tronco.origem = (3/2,3/2,0)
+    tronco.translacao((0,0,0))
+    draw_poli(ax=ax, poli=tronco, color=("green", 0.1))
+
+
+    plot()
+
 if __name__ == "__main__":
-    main()
+    primeira_questao()
+    # main()
