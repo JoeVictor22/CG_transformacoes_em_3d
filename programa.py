@@ -32,8 +32,17 @@ def draw_poli(ax, color, poli: Poli, limite_max: int = 1, titulo: str="Desenho")
     # ax.scatter(0,0,1, c="gray", marker='^')
     # ax.scatter(0, 1, 0, c="gray", marker='^')
     # ax.scatter(1, 0, 0, c="gray", marker='^')
+    print(*poli.origem,poli.origem[0],poli.origem[1],poli.origem[2]+1)
+    print(*poli.origem, poli.origem[0], poli.origem[1]+1, poli.origem[2])
 
+    '''SOMENTE NA QUESTAO 1
     ax.text(*poli.origem, "Origem", c=color[0])
+
+    ax.quiver(*poli.origem,1,0,0, color=color[0])
+    ax.quiver(*poli.origem,0,1,0, color=color[0])
+    ax.quiver(*poli.origem,0,0,1, color=color[0])
+    '''
+
     ax.scatter(*poli.origem, c=color[0], marker='^')
 
     ax.set_title(titulo)
