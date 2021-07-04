@@ -144,6 +144,7 @@ def segunda_questao():
     plot(ax)
 
 def terceira_questao():
+
     def centro_vol_visão(*poligonos: Poli):
         sum_x = sum_y = sum_z = 0
         centros_de_massas = []
@@ -161,25 +162,61 @@ def terceira_questao():
 
         return centro_do_volume
 
+
     fig = plt.figure(figsize=(10, 10))
+    ax = fig.add_subplot(111, projection="3d")
+
     cubo, paralelepipedo, piramide, tronco = cria_objetos()
+
+    # octante 2
+    paralelepipedo.translacao((-2, -3, 0))
+    tronco.translacao((-4, -3, 3))
 
     # origem do system
     olho = (-2,2,2)
     ponto_medio_dos_octantes = centro_vol_visão(tronco, paralelepipedo)
 
-    comp_u = np.subtract(ponto_medio_dos_octantes, olho)
-    aux = (0.3,0.2,0.5) #lixo aleatorio
-    comp_v = np.cross(comp_u, aux)      # produto vetorial do comp_u com aux
-    comp_n = np.cross(comp_v, comp_u)   # produto vetorial do comp_u com aux
+    comp_n = np.subtract(ponto_medio_dos_octantes, olho)
+    aux = (-2, 2,  4) #lixo aleatorio
+    comp_u = np.cross(comp_n, aux)      # produto vetorial do comp_u com aux
+    comp_v = np.cross(comp_u, comp_n)   # produto vetorial do comp_u com aux
 
-    # normalizar
+    # # normalizar
     comp_u = (comp_u / np.linalg.norm(comp_u))[0]
     comp_v = (comp_v / np.linalg.norm(comp_v))[0]
     comp_n = (comp_n / np.linalg.norm(comp_n))[0]
 
-    paralelepipedo.translacao((-olho[0], -olho[1], -olho[2]))
-    tronco.translacao((-olho[0], -olho[1], -olho[2]))
+    ax.plot([0, comp_u[0]], [0, comp_u[1]], [0, comp_u[2]], color="red", alpha=0.4)
+    ax.plot([0, comp_v[0]], [0, comp_v[1]], [0, comp_v[2]], color="green", alpha=0.4)
+    ax.plot([0, comp_n[0]], [0, comp_n[1]], [0, comp_n[2]], color="blue", alpha=0.4)
+
+
+    # ax.quiver(*comp_u, 1,0,0, color="red")
+    # ax.quiver(*comp_u, 0,1,0, color="red")
+    # ax.quiver(*comp_u, 0,0,1, color="red")
+
+    translacao_olho = np.array(
+        [
+            [1, 0, 0, -olho[0]],
+            [0, 1, 0, -olho[1]],
+            [0, 0, 1, -olho[2]],
+            [0, 0, 0, 1]
+            # [-olho[0], -olho[1], -olho[2], 1]
+        ]
+    )
+
+    # m_entrada = copy(paralelepipedo.vertices)
+    # m_entrada = np.hstack((m_entrada, np.ones((len(m_entrada), 1))))
+    # m_entrada = np.dot(m_entrada, translacao_olho)
+    # paralelepipedo.vertices = np.delete(m_entrada, 3, axis=1)
+    #
+    # m_entrada = copy(tronco.vertices)
+    # m_entrada = np.hstack((m_entrada, np.ones((len(m_entrada), 1))))
+    # m_entrada = np.dot(m_entrada, translacao_olho)
+    # tronco.vertices = np.delete(m_entrada, 3, axis=1)
+
+    # paralelepipedo.translacao((-olho[0], -olho[1], -olho[2]))
+    # tronco.translacao((-olho[0], -olho[1], -olho[2]))
 
     matriz_resultante = np.array(
         [
@@ -189,20 +226,26 @@ def terceira_questao():
             [0,0,0,1]
         ]
     )
-
     m_entrada = copy(paralelepipedo.vertices)
     m_entrada = np.hstack((m_entrada, np.ones((len(m_entrada), 1))))
-    m_entrada = np.dot(m_entrada, matriz_resultante)
+    v = np.dot(matriz_resultante, translacao_olho)
+    m_entrada = np.dot(m_entrada, v)
     paralelepipedo.vertices = np.delete(m_entrada, 3, axis=1)
 
     m_entrada = copy(tronco.vertices)
     m_entrada = np.hstack((m_entrada, np.ones((len(m_entrada), 1))))
-    m_entrada = np.dot(m_entrada, matriz_resultante)
+    v = np.dot(matriz_resultante, translacao_olho)
+    m_entrada = np.dot(m_entrada, v)
     tronco.vertices = np.delete(m_entrada, 3, axis=1)
 
 
-    ax = fig.add_subplot(111, projection="3d")
+
+
+
     ax.scatter(0,0,0, c="black")
+    ax.scatter(*ponto_medio_dos_octantes[0], c="purple")
+    ax.plot([0, ponto_medio_dos_octantes[0][0]], [0, ponto_medio_dos_octantes[0][1]], [0, ponto_medio_dos_octantes[0][2]], color="red", alpha=0.4)
+
 
     draw_poli(ax=ax, poli=paralelepipedo, color=("red", 0.1))
     draw_poli(ax=ax, poli=tronco, color=("green", 0.1), limite_max=6, titulo="Cenário Questão 2")
