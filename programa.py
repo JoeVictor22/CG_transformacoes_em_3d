@@ -33,6 +33,7 @@ def draw_poli(ax, color, poli: Poli, limite_max: int = 1, titulo: str="Desenho")
     # ax.scatter(0, 1, 0, c="gray", marker='^')
     # ax.scatter(1, 0, 0, c="gray", marker='^')
 
+    ax.text(*poli.origem, "Origem", c=color[0])
     ax.scatter(*poli.origem, c=color[0], marker='^')
 
     ax.set_title(titulo)
@@ -137,7 +138,7 @@ def terceira_questao():
     pass
 
 if __name__ == "__main__":
-    # primeira_questao()
+    #primeira_questao()
     segunda_questao()
 
 
