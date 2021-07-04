@@ -97,6 +97,21 @@ def cria_objetos():
 
     return cubo, paralelepipedo, piramide, tronco
 
+def primeira_questao():
+    fig = plt.figure(figsize=(10, 10))
+
+    cubo, paralelepipedo, piramide, tronco = cria_objetos()
+
+    ax = fig.add_subplot(2, 2, 1, projection="3d")
+    draw_poli(ax=ax, poli=cubo, color=("blue", 0.1), limite_max=2, titulo="Cubo")
+    ax = fig.add_subplot(2, 2, 2, projection='3d')
+    draw_poli(ax=ax, poli=paralelepipedo, color=("red", 0.1), limite_max=5.5, titulo="Paralelepipedo")
+    ax = fig.add_subplot(2, 2, 3, projection='3d')
+    draw_poli(ax=ax, poli=piramide, color=("orange", 0.1), limite_max=3.5, titulo="Piramide")
+    ax = fig.add_subplot(2, 2, 4, projection='3d')
+    draw_poli(ax=ax, poli=tronco, color=("green", 0.1), limite_max=3.5, titulo="Tronco")
+    plot(ax)
+
 def segunda_questao():
     fig = plt.figure(figsize=(10, 10))
 
@@ -119,58 +134,82 @@ def segunda_questao():
     draw_poli(ax=ax, poli=tronco, color=("green", 0.1), limite_max=6, titulo="Cenário Questão 2")
     plot(ax)
 
-def primeira_questao():
-    fig = plt.figure(figsize=(10, 10))
-
-    cubo, paralelepipedo, piramide, tronco = cria_objetos()
-
-    ax = fig.add_subplot(2, 2, 1, projection="3d")
-    draw_poli(ax=ax, poli=cubo, color=("blue", 0.1), limite_max=2, titulo="Cubo")
-    ax = fig.add_subplot(2, 2, 2, projection='3d')
-    draw_poli(ax=ax, poli=paralelepipedo, color=("red", 0.1), limite_max=5.5, titulo="Paralelepipedo")
-    ax = fig.add_subplot(2, 2, 3, projection='3d')
-    draw_poli(ax=ax, poli=piramide, color=("orange", 0.1), limite_max=3.5, titulo="Piramide")
-    ax = fig.add_subplot(2, 2, 4, projection='3d')
-    draw_poli(ax=ax, poli=tronco, color=("green", 0.1), limite_max=3.5, titulo="Tronco")
-    plot(ax)
-
 def terceira_questao():
+    def centro_vol_visão(*poligonos: Poli):
+        sum_x = sum_y = sum_z = 0
+        centros_de_massas = []
+        for poli in poligonos:
+            centros_de_massas.append(poli.centro_de_massa())
+
+        for centro in centros_de_massas:
+            sum_x += centro[0]
+            sum_y += centro[1]
+            sum_z += centro[2]
+
+        qtd_centros = len(centros_de_massas)
+
+        centro_do_volume = [[sum_x/qtd_centros, sum_y/ qtd_centros, sum_z/qtd_centros]]
+
+        return centro_do_volume
+
     fig = plt.figure(figsize=(10, 10))
     cubo, paralelepipedo, piramide, tronco = cria_objetos()
 
     # origem do system
-    olho = (0,0,0)
-    ponto_medio_dos_octantes = (0,0,0)
+    olho = (-2,2,2)
+    ponto_medio_dos_octantes = centro_vol_visão(tronco, paralelepipedo)
 
-    comp_u = ponto_medio_dos_octantes - olho
+    comp_u = np.subtract(ponto_medio_dos_octantes, olho)
     aux = (0.3,0.2,0.5) #lixo aleatorio
-    comp_v = comp_u * aux # produto vetorial do comp_u com aux
-    comp_n = comp_v * comp_u # produto vetorial do comp_u com aux
+    comp_v = np.cross(comp_u, aux)      # produto vetorial do comp_u com aux
+    comp_n = np.cross(comp_v, comp_u)   # produto vetorial do comp_u com aux
 
-    # comp_u = comp_u/|comp_u| normaliza essa bagaça aq
-    # comp_v = normaliza essa bagaça aq
-    # comp_n = normaliza essa bagaça aq
+    # normalizar
+    comp_u = (comp_u / np.linalg.norm(comp_u))[0]
+    comp_v = (comp_v / np.linalg.norm(comp_v))[0]
+    comp_n = (comp_n / np.linalg.norm(comp_n))[0]
 
-    translacao_olho = np.array(
+    # translacao_olho = np.array(
+    #     [
+    #         [1, 0, 0, -olho[0]],
+    #         [0, 1, 0, -olho[1]],
+    #         [0, 0, 1, -olho[2]],
+    #         [0, 0, 0, 1]
+    #         # [-olho[0], -olho[1], -olho[2], 1]
+    #     ]
+    # )
+    paralelepipedo.translacao((-olho[0], -olho[1], -olho[2]))
+    tronco.translacao((-olho[0], -olho[1], -olho[2]))
+
+
+    matriz_resultante = np.array(
         [
-            [1, 0, 0, -olho[0]],
-            [0, 1, 0, -olho[1]],
-            [0, 0, 1, -olho[2]],
-            [0, 0, 0, 1]
-            # [-olho[0], -olho[1], -olho[2], 1]
+            [comp_u[0], comp_u[1], comp_u[2], 0],
+            [comp_v[0], comp_v[1], comp_v[2], 0],
+            [comp_n[0], comp_n[1], comp_n[2], 0],
+            [0,0,0,1]
         ]
     )
 
     matriz_resultante = np.array(
         [
-            [*comp_u],
-            [*comp_v],
-            [*comp_n]
+            [comp_u[0], comp_u[1], comp_u[2]],
+            [comp_v[0], comp_v[1], comp_v[2]],
+            [comp_n[0], comp_n[1], comp_n[2]],
         ]
     )
 
-    # ponto resultado
-    p_result = matriz_resultante * translacao_olho * p
+    paralelepipedo.vertices = np.dot(paralelepipedo.vertices, matriz_resultante)
+    tronco.vertices = np.dot(tronco.vertices, matriz_resultante)
+
+
+    ax = fig.add_subplot(111, projection="3d")
+    ax.scatter(0,0,0, c="black")
+
+    draw_poli(ax=ax, poli=paralelepipedo, color=("red", 0.1))
+    draw_poli(ax=ax, poli=tronco, color=("green", 0.1), limite_max=6, titulo="Cenário Questão 2")
+    plot(ax)
+
 
 if __name__ == "__main__":
     # primeira_questao()

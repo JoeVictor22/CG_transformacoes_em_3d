@@ -67,6 +67,7 @@ class Poli:
         self.origem = destino
 
 
+
     def rotacao(self, angulo, eixo="x"):
         angulo = radians(angulo)
         if eixo == "x":
@@ -98,6 +99,20 @@ class Poli:
                 ]
             )
             self.vertices = np.dot(self.vertices, rot_z)
+
+
+    def centro_de_massa(self):
+        sum_x = sum_y = sum_z = 0
+        for ponto in self.vertices:
+            sum_x += ponto[0]
+            sum_y += ponto[1]
+            sum_z += ponto[2]
+
+        qtd_pontos = len(self.vertices)
+
+        centro_de_massa = [sum_x/qtd_pontos, sum_y/ qtd_pontos, sum_z/qtd_pontos]
+
+        return centro_de_massa
 
 
 class PiramideTronco(Poli):
