@@ -134,12 +134,47 @@ def primeira_questao():
     plot(ax)
 
 def terceira_questao():
-    pass
+    fig = plt.figure(figsize=(10, 10))
+    cubo, paralelepipedo, piramide, tronco = cria_objetos()
+
+    # origem do system
+    olho = (0,0,0)
+    ponto_medio_dos_octantes = (0,0,0)
+
+    comp_u = ponto_medio_dos_octantes - olho
+    aux = (0.3,0.2,0.5) #lixo aleatorio
+    comp_v = comp_u * aux # produto vetorial do comp_u com aux
+    comp_n = comp_v * comp_u # produto vetorial do comp_u com aux
+
+    # comp_u = comp_u/|comp_u| normaliza essa bagaça aq
+    # comp_v = normaliza essa bagaça aq
+    # comp_n = normaliza essa bagaça aq
+
+    translacao_olho = np.array(
+        [
+            [1, 0, 0, -olho[0]],
+            [0, 1, 0, -olho[1]],
+            [0, 0, 1, -olho[2]],
+            [0, 0, 0, 1]
+            # [-olho[0], -olho[1], -olho[2], 1]
+        ]
+    )
+
+    matriz_resultante = np.array(
+        [
+            [*comp_u],
+            [*comp_v],
+            [*comp_n]
+        ]
+    )
+
+    # ponto resultado
+    p_result = matriz_resultante * translacao_olho * p
 
 if __name__ == "__main__":
     # primeira_questao()
-    segunda_questao()
-
+    # segunda_questao()
+    terceira_questao()
 
 
 
