@@ -178,18 +178,8 @@ def terceira_questao():
     comp_v = (comp_v / np.linalg.norm(comp_v))[0]
     comp_n = (comp_n / np.linalg.norm(comp_n))[0]
 
-    # translacao_olho = np.array(
-    #     [
-    #         [1, 0, 0, -olho[0]],
-    #         [0, 1, 0, -olho[1]],
-    #         [0, 0, 1, -olho[2]],
-    #         [0, 0, 0, 1]
-    #         # [-olho[0], -olho[1], -olho[2], 1]
-    #     ]
-    # )
     paralelepipedo.translacao((-olho[0], -olho[1], -olho[2]))
     tronco.translacao((-olho[0], -olho[1], -olho[2]))
-
 
     matriz_resultante = np.array(
         [
@@ -200,16 +190,15 @@ def terceira_questao():
         ]
     )
 
-    matriz_resultante = np.array(
-        [
-            [comp_u[0], comp_u[1], comp_u[2]],
-            [comp_v[0], comp_v[1], comp_v[2]],
-            [comp_n[0], comp_n[1], comp_n[2]],
-        ]
-    )
+    m_entrada = copy(paralelepipedo.vertices)
+    m_entrada = np.hstack((m_entrada, np.ones((len(m_entrada), 1))))
+    m_entrada = np.dot(m_entrada, matriz_resultante)
+    paralelepipedo.vertices = np.delete(m_entrada, 3, axis=1)
 
-    paralelepipedo.vertices = np.dot(paralelepipedo.vertices, matriz_resultante)
-    tronco.vertices = np.dot(tronco.vertices, matriz_resultante)
+    m_entrada = copy(tronco.vertices)
+    m_entrada = np.hstack((m_entrada, np.ones((len(m_entrada), 1))))
+    m_entrada = np.dot(m_entrada, matriz_resultante)
+    tronco.vertices = np.delete(m_entrada, 3, axis=1)
 
 
     ax = fig.add_subplot(111, projection="3d")
