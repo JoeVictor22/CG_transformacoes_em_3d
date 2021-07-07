@@ -3,11 +3,12 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from objetos import Poli, Cubo, Piramide, PiramideTronco
-from pprint import pprint
 from copy import copy
-import sys
 
 def translacao_de_matrizes(vertices, matriz):
+    """
+    Realiza translacao de matrizes 3x3 com 4x4
+    """
     m_entrada = copy(vertices)
     m_entrada = np.hstack((m_entrada, np.ones((len(m_entrada), 1))))
     m_entrada = np.dot(m_entrada, matriz)
@@ -23,6 +24,9 @@ def draw_poli(
     titulo: str = "Desenho",
     printar_origem: bool = True,
 ):
+    """
+    Desenha um poligno tridimensional
+    """
 
     poli.calcular_estruturas()  # calcular arestas/faces
 
@@ -65,23 +69,26 @@ def draw_poli(
         [0, 0], [0, 0], [limite_max + 0.2, -limite_max - 0.2], color="Black", alpha=0.4
     )
 
-def draw_plane(
-        ax,
-        color,
-        poli: Poli,
-        limite_max: int = 1,
-        titulo: str = "Desenho",
-        printar_origem: bool = True,
-):
 
+def draw_plane(color, poli: Poli):
+    """
+    Desenha um poligono bidimensional
+    """
+    poli.calcular_estruturas()  # calcular arestas/faces
 
-    x = [i[0] for i in poli.vertices]
-    y = [i[1] for i in poli.vertices]
+    for linha in poli.faces:
+        coordenadas_em_2d = np.vstack((linha, linha[0]))
+        x, y = zip(*coordenadas_em_2d)
+        plt.plot(x, y, color)
 
-    plt.plot(x, y)
-    plt.legend(titulo)
+    plt.xlabel("Eixo X")
+    plt.ylabel("Eixo Y")
+
 
 def cria_objetos() -> (Cubo, Cubo, Piramide, PiramideTronco):
+    """
+    Cria os objetos com os parametros iniciais para todas as questões
+    """
     # cubo : 1,5
     cubo = Cubo.from_arestas(x=1.5, y=1.5, z=1.5)
     cubo.origem = (1.5 / 2, 1.5 / 2, 0)
@@ -109,6 +116,9 @@ def cria_objetos() -> (Cubo, Cubo, Piramide, PiramideTronco):
 
 
 def primeira_questao():
+    """
+    Primeira questão: plota cada objeto em um sistema tridimensionmal
+    """
     fig = plt.figure(figsize=(10, 10))
 
     cubo, paralelepipedo, piramide, tronco = cria_objetos()
@@ -133,6 +143,9 @@ def primeira_questao():
 
 
 def segunda_questao():
+    """
+    Segunda questão: Realiza operações de translação e desenha todos os objetos no mesmo sistema sem sobreposição
+    """
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(1, 2, 1, projection="3d")
 
@@ -174,6 +187,9 @@ def segunda_questao():
 
 
 def centro_de_volume_dos_objetos(*poligonos: Poli) -> np.array:
+    """
+    Calcula o ponto médio do centro de volume dos objetos
+    """
     sum_x = sum_y = sum_z = 0
     centros_de_massas = []
     for poli in poligonos:
@@ -192,23 +208,21 @@ def centro_de_volume_dos_objetos(*poligonos: Poli) -> np.array:
 
 
 def terceira_questao(deve_plotar: bool = True) -> (Cubo, Piramide):
-    # componentes bases para o plot
+    """
+    Passa os objetos do sistema de coordenadas do mundo para o da câmera
+    """
     if deve_plotar:
         fig = plt.figure(figsize=(10, 10))
         ax = fig.add_subplot(111, projection="3d")
 
-    # objetos para
+    # objetos para trabalho
     cubo, _, piramide, _ = cria_objetos()
     # origem do olho
     olho = (-2, 2, 2)
 
-    # octante
+    # realizando transformacoes da questao anterior
     cubo.translacao((1.5, 1.5, 0))
     piramide.translacao((3.5, 3.5, 0))
-
-    # desenha originais
-    # draw_poli(ax=ax, poli=cubo, color=("red", 0.1))
-    # draw_poli(ax=ax, poli=piramide, color=("green", 0.1), limite_max=6, titulo="Cenário Questão 3")
 
     ponto_medio_dos_octantes = centro_de_volume_dos_objetos(cubo, piramide)
     comp_n = np.subtract(ponto_medio_dos_octantes, olho)
@@ -241,30 +255,6 @@ def terceira_questao(deve_plotar: bool = True) -> (Cubo, Piramide):
     cubo.vertices = translacao_de_matrizes(cubo.vertices, v)
     piramide.vertices = translacao_de_matrizes(piramide.vertices, v)
 
-    # passando quiver do ponto_medio para o sistema das cameras
-    # ponto_medio_dos_octantes = translacao_de_matrizes()(matriz_resultante, np.array([*ponto_medio_dos_octantes]))
-    # = np.dot(matriz_resultante, np.array([*ponto_medio_dos_octantes]).T).T
-
-    # # desenhando o eixo do sistema de coordenadas da camera
-    # ax.plot([0, comp_u[0]], [0, comp_u[1]], [0, comp_u[2]], color="red", alpha=0.4)
-    # ax.plot([0, comp_v[0]], [0, comp_v[1]], [0, comp_v[2]], color="green", alpha=0.4)
-    # ax.plot([0, comp_n[0]], [0, comp_n[1]], [0, comp_n[2]], color="blue", alpha=0.4)
-
-    # # desenhando componentes
-    # ax.quiver(*comp_u, 1,0,0, color="red")
-    # ax.quiver(*comp_u, 0,1,0, color="red")
-    # ax.quiver(*comp_u, 0,0,1, color="red")
-
-    # desenhar quiver do olho para o ponto de observacao
-    # ax.scatter(0,0,0, c="black")
-    # ax.scatter(*ponto_medio_dos_octantes[0], c="purple")
-    # ax.plot([0, ponto_medio_dos_octantes[0][0]], [0, ponto_medio_dos_octantes[0][1]], [0, ponto_medio_dos_octantes[0][2]], color="red", alpha=0.4)
-
-    # translacao das origens
-    # origem = np.array([[cubo.origem[0], cubo.origem[1], cubo.origem[2]]])
-    # origem = translacao_de_matrizes(origem, translacao_olho)[0]
-    # cubo.origem = (origem[0], origem[1], origem[2])
-
     if deve_plotar:
         # desenhando objetos
         draw_poli(ax=ax, poli=cubo, color=("red", 0.1), printar_origem=False)
@@ -273,7 +263,7 @@ def terceira_questao(deve_plotar: bool = True) -> (Cubo, Piramide):
             poli=piramide,
             color=("green", 0.1),
             limite_max=6,
-            titulo="Cenário Questão 2",
+            titulo="Cenário Questão 3",
             printar_origem=False,
         )
 
@@ -283,37 +273,46 @@ def terceira_questao(deve_plotar: bool = True) -> (Cubo, Piramide):
 
 
 def quarta_questao():
+    """
+    Desenha os objetos do sistema de coordenadas da camera em 2D
+    """
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection="3d")
 
+    # recebe os objetos no sistema da camera
     cubo, piramide = terceira_questao(deve_plotar=False)
 
+    # transformacao para 2d
     p = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 1]])
-
     cubo.vertices = translacao_de_matrizes(cubo.vertices, p)
     piramide.vertices = translacao_de_matrizes(piramide.vertices, p)
 
+    # desenha em 3d
+    draw_poli(ax=ax, poli=cubo, color=("red", 0.1), printar_origem=False)
+    draw_poli(
+        ax=ax,
+        poli=piramide,
+        color=("green", 0.1),
+        limite_max=6,
+        titulo="Cenário Questão 4",
+        printar_origem=False,
+    )
+    plt.show()
+
+    plt.figure(figsize=(8, 8), dpi=80)
+
+    # removendo eixo Z dos objetos
     cubo.vertices = np.delete(cubo.vertices, 2, axis=1)
     piramide.vertices = np.delete(piramide.vertices, 2, axis=1)
 
-    draw_plane(ax=ax, poli=cubo, color=("red", 0.1))
-    draw_plane(ax=ax, poli=piramide, color=("red", 0.1))
-    # draw_poli(ax=ax, poli=cubo, color=("red", 0.1))
-    # draw_poli(
-    #     ax=ax,
-    #     poli=piramide,
-    #     color=("green", 0.1),
-    #     limite_max=6,
-    #     titulo="Cenário Questão 4",
-    # )
-
+    # desenha em 2d
+    draw_plane(poli=cubo, color="green")
+    draw_plane(poli=piramide, color="red")
     plt.show()
 
 
 if __name__ == "__main__":
-    # globals()[sys.argv[1]]()
-
-    # primeira_questao()
-    # segunda_questao()
-    # terceira_questao()
+    primeira_questao()
+    segunda_questao()
+    terceira_questao()
     quarta_questao()
