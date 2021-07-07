@@ -33,29 +33,18 @@ class Poli:
         """Should be implemented on children"""
         pass
 
-    # def __setattr__(self, key, value):
-    #     if key == "_origem": # expeting a tuple
-    #         if not isinstance(value, Tuple):
-    #             raise ValueError
-    #
-    #         self.origem = list(value)
-    #         self._origem = value
-    #     else:
-    #         return super().__setattr__(key, value)
-
     def translacao(self, destino: Tuple):
         origem = [
             destino[index] - self.origem[index] for index, value in enumerate(destino)
         ]
         matriz_de_translacao = np.array(
             [
-                [1,0,0, 0],
-                [0,1,0, 0],
-                [0,0,1, 0],
-                [origem[0],origem[1],origem[2], 1]
+                [1, 0, 0, 0],
+                [0, 1, 0, 0],
+                [0, 0, 1, 0],
+                [origem[0], origem[1], origem[2], 1],
             ]
         )
-
 
         m_entrada = copy(self.vertices)
         m_entrada = np.hstack((m_entrada, np.ones((len(m_entrada), 1))))
@@ -66,8 +55,6 @@ class Poli:
 
         self.origem = destino
 
-
-
     def rotacao(self, angulo, eixo="x"):
         angulo = radians(angulo)
         if eixo == "x":
@@ -75,7 +62,7 @@ class Poli:
                 [
                     [1, 0, 0],
                     [0, cos(angulo), -sin(angulo)],
-                    [0, sin(angulo), cos(angulo)]
+                    [0, sin(angulo), cos(angulo)],
                 ]
             )
             self.vertices = np.dot(self.vertices, rot_x)
@@ -85,7 +72,7 @@ class Poli:
                 [
                     [cos(angulo), 0, sin(angulo)],
                     [0, 1, 0],
-                    [-sin(angulo), 0, cos(angulo)]
+                    [-sin(angulo), 0, cos(angulo)],
                 ]
             )
             self.vertices = np.dot(self.vertices, rot_y)
@@ -95,11 +82,10 @@ class Poli:
                 [
                     [cos(angulo), -sin(angulo), 0],
                     [sin(angulo), cos(angulo), 0],
-                    [0, 0, 1]
+                    [0, 0, 1],
                 ]
             )
             self.vertices = np.dot(self.vertices, rot_z)
-
 
     def centro_de_massa(self):
         sum_x = sum_y = sum_z = 0
@@ -110,7 +96,7 @@ class Poli:
 
         qtd_pontos = len(self.vertices)
 
-        centro_de_massa = [sum_x/qtd_pontos, sum_y/ qtd_pontos, sum_z/qtd_pontos]
+        centro_de_massa = [sum_x / qtd_pontos, sum_y / qtd_pontos, sum_z / qtd_pontos]
 
         return centro_de_massa
 
