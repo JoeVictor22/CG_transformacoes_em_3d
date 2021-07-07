@@ -7,6 +7,7 @@ from pprint import pprint
 from copy import copy
 import sys
 
+
 def translacao_de_matrizes(vertices, matriz):
     m_entrada = copy(vertices)
     m_entrada = np.hstack((m_entrada, np.ones((len(m_entrada), 1))))
@@ -65,21 +66,22 @@ def draw_poli(
         [0, 0], [0, 0], [limite_max + 0.2, -limite_max - 0.2], color="Black", alpha=0.4
     )
 
-def draw_plane(
-        ax,
-        color,
-        poli: Poli,
-        limite_max: int = 1,
-        titulo: str = "Desenho",
-        printar_origem: bool = True,
-):
 
+def draw_plane(
+    ax,
+    color,
+    poli: Poli,
+    limite_max: int = 1,
+    titulo: str = "Desenho",
+    printar_origem: bool = True,
+):
 
     x = [i[0] for i in poli.vertices]
     y = [i[1] for i in poli.vertices]
 
     plt.plot(x, y)
     plt.legend(titulo)
+
 
 def cria_objetos() -> (Cubo, Cubo, Piramide, PiramideTronco):
     # cubo : 1,5
