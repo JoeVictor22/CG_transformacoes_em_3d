@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 import numpy as np
-from pprint import pprint
 from typing import List, Tuple, Any
 from math import sin, cos, radians
 from copy import copy
@@ -8,29 +7,21 @@ from copy import copy
 
 @dataclass
 class Poli:
-    vertices: Any = None  # List[List[float]] = List
+    vertices: Any = None
     arestas: Any = None
     faces: Any = None
-    origem: List[float] = (0, 0, 0)  # (0.0, 0.0, 0.0)
-    _origem: Tuple[float] = (0, 0, 0)  # (0.0, 0.0, 0.0)
-
-    def __post_init__(self):
-        """Do something after instancing"""
-        pass
+    origem: List[float] = (0, 0, 0)
 
     def calcular_estruturas(self):
         self.vertices_para_arestas()
         self.vertices_para_faces()
 
-    def draw(self):
-        # to-do
+    def vertices_para_arestas(self):
+        """Deve ser implementado nas classes que herdam"""
         pass
 
-    def vertices_para_arestas(self):
-        """Should be implemented on children"""
-
     def vertices_para_faces(self):
-        """Should be implemented on children"""
+        """Deve ser implementado nas classes que herdam"""
         pass
 
     def translacao(self, destino: Tuple):
@@ -287,10 +278,6 @@ class Piramide(Poli):
                 ]
             )
         )
-        # A - B, A - C, A - D, A - E
-        # B - E
-        # C - E
-        # D - E
 
     def vertices_para_arestas(self):
         self.arestas = [
@@ -317,18 +304,3 @@ class Piramide(Poli):
             [self.vertices[2], self.vertices[3], self.vertices[4]],  # C-D-E
             [self.vertices[3], self.vertices[0], self.vertices[4]],  # D-A-E
         ]
-
-
-if __name__ == "__main__":
-    print("asd")
-    cubo = Cubo.from_arestas(x=1.5, y=1.5, z=1.5)
-    # cubo = cubo.origem( (0.5 ** (x*x + y*y)) * 0.5)
-
-    paralelepipedo = Cubo.from_arestas(1.5, 5, 2.5)
-    # paralelepipedo = paralelepipedo.origem((paralelepipedo.vertices[0][0]+paralelepipedo.vertices[3][0])/2,(paralelepipedo.vertices[0][1]+paralelepipedo.vertices[3][1])/2,(paralelepipedo.vertices[0][2]+paralelepipedo.vertices[3][2])/2)
-
-    piramide = Piramide.from_arestas(2, 2, 3)
-
-    pprint(cubo.arestas)
-    pprint(paralelepipedo.arestas)
-    pprint(piramide.arestas)
