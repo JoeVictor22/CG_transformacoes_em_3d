@@ -5,6 +5,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from objetos import Poli, Cubo, Piramide, PiramideTronco
 from copy import copy
 
+
 def translacao_de_matrizes(vertices, matriz):
     """
     Realiza translacao de matrizes 3x3 com 4x4
@@ -83,6 +84,8 @@ def draw_plane(color, poli: Poli):
 
     plt.xlabel("Eixo X")
     plt.ylabel("Eixo Y")
+
+
 
 
 def cria_objetos() -> (Cubo, Cubo, Piramide, PiramideTronco):
