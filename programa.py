@@ -4,6 +4,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from objetos import Poligono, Retangulo, Piramide, TroncoPiramide
 from copy import copy
 
+__author__ = "Joel Victor de Castro Galvão/Raynan Serafim de Souza"
 
 def translacao_de_matrizes(vertices, matriz):
     """
