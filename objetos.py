@@ -6,25 +6,35 @@ from copy import copy
 
 
 @dataclass
-class Poli:
-    vertices: Any = None
-    arestas: Any = None
-    faces: Any = None
-    origem: List[float] = (0, 0, 0)
+class Poligono:
+    """
+    Classe pai para a implementação de diversos objetos
+    """
+
+    vertices: np.array = np.array([])
+    arestas: np.array = np.array([])
+    faces: np.array = np.array([])
+    origem: Tuple = (0, 0, 0)
 
     def calcular_estruturas(self):
+        """
+        Monta as estruturas necessários para o plot do objeto
+        """
         self.vertices_para_arestas()
         self.vertices_para_faces()
 
     def vertices_para_arestas(self):
-        """Deve ser implementado nas classes que herdam"""
+        """Transforma os vertices do objeto em arestas"""
         pass
 
     def vertices_para_faces(self):
-        """Deve ser implementado nas classes que herdam"""
+        """Transforma os vertices do objeto em faces"""
         pass
 
     def translacao(self, destino: Tuple):
+        """
+        Realiza a translação do objeto para uma posição (x,y,z)
+        """
         origem = [
             destino[index] - self.origem[index] for index, value in enumerate(destino)
         ]
@@ -47,6 +57,9 @@ class Poli:
         self.origem = destino
 
     def rotacao(self, angulo, eixo="x"):
+        """
+        Rotaciona o poligono de acordo com angulo e eixo
+        """
         angulo = radians(angulo)
         if eixo == "x":
             rot_x = np.array(
@@ -78,7 +91,10 @@ class Poli:
             )
             self.vertices = np.dot(self.vertices, rot_z)
 
-    def centro_de_massa(self):
+    def centro_de_massa(self) -> list[float]:
+        """
+        Calcula o centro de massa do objeto
+        """
         sum_x = sum_y = sum_z = 0
         for ponto in self.vertices:
             sum_x += ponto[0]
@@ -92,7 +108,7 @@ class Poli:
         return centro_de_massa
 
 
-class PiramideTronco(Poli):
+class TroncoPiramide(Poligono):
     @staticmethod
     def from_arestas(
         x_base: float = 1,
@@ -100,8 +116,8 @@ class PiramideTronco(Poli):
         z: float = 1,
         x_superior: float = 1,
         y_superior: float = 1,
-    ):
-        cubo = Cubo(
+    ) -> np.array:
+        cubo = Retangulo(
             vertices=np.array(
                 [
                     [0, 0, 0],  # A
@@ -187,10 +203,10 @@ class PiramideTronco(Poli):
         ]
 
 
-class Cubo(Poli):
+class Retangulo(Poligono):
     @staticmethod
-    def from_arestas(x: float = 1, y: float = 1, z: float = 1):
-        cubo = Cubo(
+    def from_arestas(x: float = 1, y: float = 1, z: float = 1) -> np.array:
+        cubo = Retangulo(
             vertices=np.array(
                 [
                     [0, 0, 0],  # A
@@ -264,9 +280,9 @@ class Cubo(Poli):
         ]
 
 
-class Piramide(Poli):
+class Piramide(Poligono):
     @staticmethod
-    def from_arestas(x: float = 1, y: float = 1, z: float = 1):
+    def from_arestas(x: float = 1, y: float = 1, z: float = 1) -> np.array:
         return Piramide(
             vertices=np.array(
                 [
